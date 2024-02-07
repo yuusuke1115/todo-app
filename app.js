@@ -3,10 +3,14 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const PORT = 3000;
 
 app.set("view engine", "ejs");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 const pool = mysql.createPool({
   connectionLimit: process.env.CONNECTION_LIMIT, 
@@ -27,6 +31,20 @@ app.get("/", (req, res) => {
       console.log(tasks);
       if (!err) {
         res.render("home", {tasks: tasks});
+      };
+    });
+  });
+});
+
+app.post("/", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      throw err;
+    };
+    connection.query("INSERT INTO task VALUES (null, ?)",  req.body.task ,(err) => {
+      connection.release();
+      if (!err) {
+        res.redirect("/");
       };
     });
   });
