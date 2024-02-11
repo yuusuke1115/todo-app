@@ -10,19 +10,25 @@
     <title>ホーム</title>
   </head>
   <body>
-    <div class="container text-center">
-      <form action="/home" method="POST">
-        <label>タスクの追加</label>
-        <input required type="text" size="24" name="task" placeholder="タスクを追加してください">
-        <input type="submit" value="追加">
-      </form>
-      <% for (let task of tasks) {%>
-        <li>
-          <a href="/home/task/<%= task.id %>">
-            <%= task["name"] %>
-          </a>
-        </li>
-      <% } %>
+    <div class="container text-center mt-3" style="max-width: 600px;">
+      <div class="mb-2">
+        <form action="/home" method="POST">
+          <label>タスクの追加</label>
+          <input required type="text" size="24" name="task" placeholder="タスクを追加してください">
+          <input type="submit" value="追加">
+        </form>
+      </div>
+      <div>
+        <ul class="list-group list-group-flush">
+          <% for (let task of tasks) {%>
+            <li class="list-group-item">
+              <a href="/home/task/<%= task.id %>">
+                <%= task["name"] %>
+              </a>
+            </li>
+          <% } %>
+        </ul>
+      </div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
