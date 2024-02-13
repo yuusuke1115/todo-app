@@ -11,9 +11,9 @@
   </head>
   <body>
     <div class="container text-center mt-3" style="max-width: 600px;">
-      <form action="/home/task/<%= task.id %>" method="POST">
+      <form action="/home/task/<%= task[0].id %>" method="POST">
         <label>タスク名の変更</label>
-        <input required type="text" size="24" name="task" value="<%= task[0]["name"] %>">
+        <input required type="text" size="24" name="task" value="<%= task[0].name %>">
         <input type="submit" value="追加">
       </form>
     </div>

@@ -8,7 +8,6 @@ router.get("/", (_, res) => {
     };
     connection.query("SELECT * FROM task", (err, tasks) => {
       connection.release();
-      console.log(tasks);
       if (!err) {
         res.render("home", {tasks: tasks});
       };
@@ -35,10 +34,24 @@ router.get("/task/:id", (req, res) => {
     if (err) {
       throw err;
     };
-    connection.query("SELECT name FROM task WHERE id = ?", req.params.id, (err, name) => {
+    connection.query("SELECT id, name FROM task WHERE id = ?", req.params.id, (err, task) => {
       connection.release();
       if (!err) {
-        res.send(name);
+        res.render("task", {task: task});
+      };
+    });
+  });
+});
+
+router.post("/task/:id", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      throw err;
+    };
+    connection.query("UPDATE task SET name = ? WHERE id = ?", [req.body.task, req.params.id], (err) => {
+      connection.release();
+      if (!err) {
+        res.redirect("/home");
       };
     });
   });
