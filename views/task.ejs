@@ -13,9 +13,16 @@
     <div class="container text-center mt-3" style="max-width: 600px;">
       <form action="/home/task/<%= task[0].id %>" method="POST">
         <label>タスク名の変更</label>
-        <input required type="text" size="24" name="task" value="<%= task[0].name %>">
-        <input type="submit" value="追加">
+        <input required type="text" size="24" name="updatedTask" value="<%= task[0].name %>">
+        <input type="submit" name="updatedButton" value="変更">
       </form>
+      <form action="/home/delete?id=<%= task[0].id %>" method="POST">
+        <label>タスクの削除</label>
+        <input hidden value="<%= task[0].id %>">
+        <input disabled="true" type="text" size="24" name="deletedTask" value="<%= task[0].name %>">
+        <input type="submit" name="deletedButton" value="削除">
+      </form>
+      <a href="/home" class="btn btn-outline-primary" role="button">戻る</a>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
