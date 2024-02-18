@@ -7,28 +7,22 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>ホーム</title>
+    <title>タスク編集</title>
   </head>
   <body>
     <div class="container text-center mt-3" style="max-width: 600px;">
-      <div class="mb-2">
-        <form action="/home" method="POST">
-          <label>タスクの追加</label>
-          <input required type="text" size="24" name="task" placeholder="タスクを追加してください">
-          <input type="submit" value="追加">
-        </form>
-      </div>
-      <div>
-        <ul class="list-group list-group-flush">
-          <% for (let task of tasks) {%>
-            <li class="list-group-item">
-              <a href="/home/task/<%= task.id %>">
-                <%= task["name"] %>
-              </a>
-            </li>
-          <% } %>
-        </ul>
-      </div>
+      <form action="/home/task/<%= task[0].id %>" method="POST">
+        <label>タスク名の変更</label>
+        <input required type="text" size="24" name="updatedTask" value="<%= task[0].name %>">
+        <input type="submit" name="updatedButton" value="変更">
+      </form>
+      <form action="/home/delete?id=<%= task[0].id %>" method="POST">
+        <label>タスクの削除</label>
+        <input hidden value="<%= task[0].id %>">
+        <input disabled="true" type="text" size="24" name="deletedTask" value="<%= task[0].name %>">
+        <input type="submit" name="deletedButton" value="削除">
+      </form>
+      <a href="/home" class="btn btn-outline-primary" role="button">戻る</a>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
